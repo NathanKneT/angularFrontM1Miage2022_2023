@@ -1,0 +1,57 @@
+<form ngForm (submit)="onSubmit(); assignmentForm.reset()" #assignmentForm class="form">
+    <mat-form-field>
+      <label>Nom du devoir</label>
+      <input matInput #nomAssignment [(ngModel)]="nomDevoir" name="nom">
+    </mat-form-field>
+    <p>{{nomDevoir}}</p>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Choisissez une date</mat-label>
+      <input matInput [matDatepicker]="picker">
+      <mat-hint>MM/DD/YYYY</mat-hint>
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+    <!-- <mat-form-field appearance="fill">
+      <input matInput [matDatepicker]="picker" placeholder="Date de rendu" [(ngModel)]="dateDeRendu" name="date" required >
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field> -->
+
+    <br>
+    <button mat-stroked-button
+            color="primary"
+            [disabled]="!ajoutActive"
+            (click)="onSubmit()">
+      Ajouter un Devoir
+    </button>
+  
+  
+  </form>
+  <div id="list" *ngFor="let assignment of assignments" [ngClass]="{'state':assignment.rendu, 'nonState': !assignment.rendu}">
+    <p *ngIf="assignment.rendu">
+      Devoir intitulé {{assignment.nom}}, rendu le
+      {{assignment.dateDeRendu}}.
+    </p>
+    <p *ngIf="!assignment.rendu">
+      Non rendu le {{assignment.nom}}.
+    </p>
+  </div>
+  
+  <mat-list *ngFor="let assignment of assignments">
+    <h3 mat-subheader>{{assignment.dateDeRendu | date }}</h3>
+    <mat-list-item (click)="assignmentClique(assignment)">
+      <p appRendu *ngIf="assignment.rendu; else nonsoumis">
+        Devoir intitulé {{assignment.nom}} a été rendu.
+      </p>
+      <ng-template #nonsoumis>
+        <p id="non_rendu">
+        Le devoir {{assignment.nom}} n'a pas été rendu.
+      </p>
+      </ng-template>
+      <mat-divider></mat-divider>
+    </mat-list-item>
+  </mat-list>
+  <app-assignment-detail [assignmentTransmis]="assignementSelectionne"></app-assignment-detail>
+  

@@ -1,0 +1,13 @@
+.form {
+    display:flex;
+    flex-direction: column;
+    margin:5px;
+ }
+ 
+ #rendu {
+    color:green;
+ }
+
+ #non_rendu {
+    color:red;
+ }
