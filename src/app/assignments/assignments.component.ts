@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import {Assignement} from "./assignement.model";
+import { Component, EventEmitter, OnInit, Output} from '@angular/core';
+import { Assignment } from './assignement.model';
+import { AssignmentsService } from '../shared/assignments.service';
 
 @Component({
   selector: 'app-assignments',
@@ -8,43 +9,52 @@ import {Assignement} from "./assignement.model";
 })
 export class AssignmentsComponent implements OnInit {
   titre = "Mon application sur les assignments ! ";
+  formVisible = false;
+  assignementSelectionne?: Assignment;
+  assignments!: Assignment[];
   ajoutActive = false;
   nomDevoir: string = "";
-  assignementSelectionne:Assignement = new Assignement();
+  dueDate: Date = new Date();
 
-  onSubmit() {
-    console.log(this.nomDevoir);
+  onAddAssignmentBtnClick() {
+    // this.formVisible = true;
   }
 
-  assignmentClique(assignment:Assignement){
+  // onNewAssignment(event:Assignment) {
+  //  // this.assignments.push(event);
+  //  this.assignmentService.addAssignment(event).subscribe(
+  //     (message) => {
+  //       console.log(message);
+  //     }
+  //   );
+  //   this.formVisible = false;
+  // }
+
+
+  assignmentClique(assignment:Assignment) {
     this.assignementSelectionne = assignment;
   }
 
+  deleteAssignmentByNom(nom:string) {
+    let index = this.assignments.findIndex(assignment => assignment.nom === nom);
+    this.assignments.splice(index, 1);
+  }
+
+  onAssignmentDeleted(event:Assignment) {
+    this.deleteAssignmentByNom(event.nom);
+    this.assignementSelectionne = undefined;
+    }
+    
+  constructor (private assignmentService: AssignmentsService) { }
   ngOnInit(): void {
     setTimeout(() => {
       this.ajoutActive = true;
     }, 2000);
+    this.assignmentService.getAssignments().subscribe(
+      (assignments) => {
+        this.assignments = assignments;
+      }
+    );
   }
 
-  assignments = [
-    {
-      nom : "WebComponent",
-      dateDeRendu : new Date("2020-11-30"),
-      rendu : true,
-    },
-    {
-      nom : "Angular",
-      dateDeRendu : new Date("2020-11-30"),
-      rendu : false,
-    },
-    {
-      nom : "VueJS",
-      dateDeRendu : new Date("2020-11-30"),
-      rendu : false,
-    }
-  ];
-
-  constructor() { }
-
 }
-

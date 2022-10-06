@@ -15,11 +15,19 @@ import { RenduDirective } from './shared/rendu.directive';
 import { FormsModule } from '@angular/forms';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-import { AssignmentDetailComponent } from './assignments/assignment-detail/assignment-detail.component';
+import { AssignmentDetailComponent } from './assignment-detail/assignment-detail.component';
 import {MatListModule} from '@angular/material/list';
 import {MatCardModule} from "@angular/material/card";
 import {MatCheckboxModule} from "@angular/material/checkbox";
+import { AddAssignmentComponent } from './add-assignment/add-assignment.component';
+import { RouterModule, Routes } from '@angular/router';
 // import { AddAssignmentComponent } from './assignments/add-assignment/add-assignment.component';
+
+const routes: Routes = [
+  { path: 'home', component: AssignmentsComponent },
+  { path: 'add', component: AddAssignmentComponent },
+  { path: 'assignement/:id', component: AssignmentDetailComponent },
+];
 
 @NgModule({
   declarations: [
@@ -27,6 +35,7 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
     AssignmentsComponent,
     RenduDirective,
     AssignmentDetailComponent,
+    AddAssignmentComponent,
     // AddAssignmentComponent
   ],
   imports: [
@@ -39,7 +48,8 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
     MatNativeDateModule,
     MatListModule,
     MatCardModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    RouterModule.forRoot(routes),
   ],
   providers: [],
   bootstrap: [AppComponent]

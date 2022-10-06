@@ -1,13 +1,15 @@
-.form {
-    display:flex;
-    flex-direction: column;
-    margin:5px;
- }
- 
- #rendu {
-    color:green;
- }
+.rendu {
+   color: green;
+}
 
- #non_rendu {
-    color:red;
- }
+.nonRendu {
+   color: red;
+}
+.container {
+   display: flex;
+   flex-direction: column;
+}
+
+.addBtn {
+   align-self: flex-end;
+}

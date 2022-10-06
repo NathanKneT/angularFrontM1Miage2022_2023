@@ -1,5 +1,6 @@
-export class Assignement {
-  nom!: string;
-  dateDeRendu!: Date;
-  rendu!: boolean;
+export class Assignment {
+  [x: string]: any;
+  nom! : string;
+  dueDate! : Date;
+  rendu! : boolean;
 }
