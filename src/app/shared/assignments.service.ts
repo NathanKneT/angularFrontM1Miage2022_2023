@@ -16,24 +16,24 @@ export class AssignmentsService {
   assignementSelectionne?: Assignment;
   
   assignments:Assignment[] = [
-    {
-      id: 1,
-      nom : "WebComponent",
-      dueDate : new Date("2020-11-30"),
-      rendu : true, 
-    },
-    {
-      id: 2,
-      nom : "Angular",
-      dueDate : new Date("2020-11-30"),
-      rendu : false,
-    },
-    {
-      id: 3,
-      nom : "VueJS",
-      dueDate : new Date("2020-11-30"),
-      rendu : false,
-    }
+    // {
+    //   id: 1,
+    //   nom : "WebComponent",
+    //   dueDate : new Date("2020-11-30"),
+    //   rendu : true, 
+    // },
+    // {
+    //   id: 2,
+    //   nom : "Angular",
+    //   dueDate : new Date("2020-11-30"),
+    //   rendu : false,
+    // },
+    // {
+    //   id: 3,
+    //   nom : "VueJS",
+    //   dueDate : new Date("2020-11-30"),
+    //   rendu : false,
+    // }
   ];
 
   constructor(private loggingService: LoggingService, private http:HttpClient) { }
@@ -75,6 +75,12 @@ export class AssignmentsService {
     // return of("Assignment deleted");
     let deleteURI = this.url + '/' + assignment._id;
     return this.http.delete(deleteURI);
+  }
+
+  // make function that delete all assignments in the database
+
+  deleteAllAssignments():Observable<any> {
+    return this.http.delete(this.url);
   }
 
 }
