@@ -4,6 +4,27 @@
     <mat-card-subtitle>{{assignementTransmis.dueDate | date}}</mat-card-subtitle>
     <mat-checkbox *ngIf="!assignementTransmis.rendu"
                 (click)="onAssignmentRendu()">Devoir rendu</mat-checkbox>
-    <button class="addBtn" mat-flat-button color="accent" (click)="onDeleteRendu()">Supprimer rendu</button>
+                <button mat-raised-button color="primary" (click)="onClickEdit()" [disabled]="!isAdmin()">
+                    Edit
+                </button>
+    <button class="addBtn" mat-flat-button color="accent" (click)="onDelete()">Supprimer rendu</button>
     </mat-card>
 </div>
+
+<!-- <div class="container">
+    <mat-card>
+        <mat-card-title>{{assignementTransmis.nom}}</mat-card-title>
+        <mat-card-subtitle>{{assignementTransmis.dateDeRendu | date}}</mat-card-subtitle>
+        <div id="bottom">
+            <mat-checkbox *ngIf="!assignementTransmis.rendu" (click)="onAssignmentRendu()">
+                Devoir rendu
+            </mat-checkbox>
+            <button mat-raised-button color="primary" (click)="onClickEdit()" [disabled]="!isAdmin()">
+                Edit
+            </button>
+            <button class="deleteBtn" mat-flat-button color="warn" (click)="onDeleteRendu()">
+                Supprimer rendu
+            </button>
+        </div>
+    </mat-card>
+</div> -->

@@ -1,7 +1,7 @@
 import { AppComponent } from './app.component';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { MatSlideToggleModule} from '@angular/material/slide-toggle'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -21,12 +21,16 @@ import {MatCardModule} from "@angular/material/card";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import { AddAssignmentComponent } from './add-assignment/add-assignment.component';
 import { RouterModule, Routes } from '@angular/router';
-// import { AddAssignmentComponent } from './assignments/add-assignment/add-assignment.component';
+import { EditAssignmentComponent } from './edit-assignment/edit-assignment.component';
+import { AuthGuard } from './auth.guard';
+import { HttpClientModule } from '@angular/common/http';
+import { MatPaginatorModule } from '@angular/material/paginator'; 
 
 const routes: Routes = [
   { path: 'home', component: AssignmentsComponent },
   { path: 'add', component: AddAssignmentComponent },
-  { path: 'assignement/:id', component: AssignmentDetailComponent },
+  { path: 'assignment/:id', component: AssignmentDetailComponent },
+  { path: 'assignment/:id/edit', component: EditAssignmentComponent, canActivate: [AuthGuard] },
 ];
 
 @NgModule({
@@ -36,7 +40,7 @@ const routes: Routes = [
     RenduDirective,
     AssignmentDetailComponent,
     AddAssignmentComponent,
-    // AddAssignmentComponent
+    EditAssignmentComponent,
   ],
   imports: [
     BrowserModule,
@@ -49,6 +53,9 @@ const routes: Routes = [
     MatListModule,
     MatCardModule,
     MatCheckboxModule,
+    MatSlideToggleModule,
+    HttpClientModule,
+    MatPaginatorModule,
     RouterModule.forRoot(routes),
   ],
   providers: [],

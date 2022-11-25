@@ -8,22 +8,39 @@ import { AssignmentsService } from '../shared/assignments.service';
   styleUrls: ['./add-assignment.component.css']
 })
 export class AddAssignmentComponent implements OnInit {
-  // @Output() newAssignment = new EventEmitter<Assignment>();
   
   nomDevoir:string="";
   dueDate:Date = new Date();
-  constructor(private AssignmentsService: AssignmentsService) { }
+  constructor(private assignmentsService: AssignmentsService) { }
   ngOnInit(): void {
+  }
+
+    // Create function that use addAssignment function but with random data and call it 500 times
+  // to populate the database
+
+  populateDatabase() {
+    for (let i = 0; i < 500; i++) {
+      const newAssignment = new Assignment();
+      newAssignment.id = Math.floor(Math.random() * 1000);
+      newAssignment.nom = "Devoir " + i;
+      newAssignment.dueDate = new Date();
+      newAssignment.rendu = false;
+      this.assignmentsService.addAssignment(newAssignment).subscribe(
+        (message) => {
+          console.log(message);
+        }
+      );
+    }
   }
 
   onSubmit() {
     const newAssignment = new Assignment();
+    newAssignment.id = Math.floor(Math.random() * 1000);
     newAssignment.nom = this.nomDevoir;
     newAssignment.dueDate = this.dueDate;
     newAssignment.rendu = false;
 
-    // this.newAssignment.emit(newAssignment);
-    this.AssignmentsService.addAssignment(newAssignment).subscribe(
+    this.assignmentsService.addAssignment(newAssignment).subscribe(
       (message) => {
         console.log(message);
       }

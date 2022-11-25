@@ -12,7 +12,13 @@
     <br>
     <button mat-stroked-button
         color="primary"
-        (click)="onSubmit()">
+        >
     Ajouter un Devoir
+    </button>
+
+    <button mat-stroked-button
+        color="secondary"
+        (click)="populateDatabase(); assignmentForm.reset()">
+    Spam database
     </button>
 </form>

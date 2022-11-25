@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Assignment } from '../assignments/assignement.model';
 import { AssignmentsService } from '../shared/assignments.service';
+import { ActivatedRoute, Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-assignment-detail',
@@ -8,35 +10,58 @@ import { AssignmentsService } from '../shared/assignments.service';
   styleUrls: ['./assignment-detail.component.css']
 })
 export class AssignmentDetailComponent implements OnInit {
-  @Input()
-  assignementTransmis: Assignment = new Assignment;
+  /*@Input()*/ assignementTransmis: Assignment = new Assignment;
   @Output() assignmentASupprimer = new EventEmitter<Assignment>();
+  assignment: any;
+  authService: any;
 
   // use updateAssignment from assignmentService
-  onAssignmentRendu() {
-    this.assignementTransmis.rendu = true;
+  onUpdateAssignment() {
     this.assignmentService.updateAssignment(this.assignementTransmis).subscribe(
       (message) => {
         console.log(message);
+        this.router.navigate(['/assignments']);
       }
     );
   }
-  onDeleteRendu() {
-    this.assignmentService.deleteAssignment(this.assignementTransmis).subscribe(
+
+  onAssignmentRendu() {
+    this.assignmentService.updateAssignment(this.assignementTransmis).subscribe(
       (message) => {
         console.log(message);
-        this.assignementTransmis = new Assignment();
+        this.router.navigate(['/home']);
       }
     );
-    
-    // this.assignementTransmis.rendu = false;
+  }
 
-    // this.assignmentASupprimer.emit(this.assignementTransmis);
+  onDelete() {
+    this.assignmentService.deleteAssignment(this.assignementTransmis).subscribe((message) => {
+      console.log(message);
+      this.router.navigate(['/home']);
+    });
   }
-  constructor(private assignmentService: AssignmentsService) {
+
+  onClickEdit() {
+    this.router.navigate(['/assignment', this.assignementTransmis.id, 'edit'],{queryParams: {nom: this.assignementTransmis.nom},fragment:'edition'});
   }
+
+  constructor(private assignmentService: AssignmentsService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
+    this.getAssignment();
+  }
+
+  getAssignment() {
+    const id = +this.route.snapshot.params['id']; /*Bizarre ça DIAPO 163 */ 
+    this.assignmentService.getAssignment(id).subscribe(
+      (assignment) => {
+        this.assignementTransmis = assignment!;
+      }
+    );
+  }
+
+  isAdmin():boolean {
+    return this.authService.isAdmin
   }
 
 }

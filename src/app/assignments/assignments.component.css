@@ -13,3 +13,7 @@
 .addBtn {
    align-self: flex-end;
 }
+
+a {
+   text-decoration: none;
+}
